@@ -11,8 +11,11 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity2 extends AppCompatActivity {
     public DrawerLayout drawerLayout;
@@ -65,6 +68,15 @@ public class MainActivity2 extends AppCompatActivity {
                     Intent n=new Intent(MainActivity2.this,contribution.class);
                     startActivity(n);
                     break;
+
+                case R.id.logout:
+                    FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+                    FirebaseAuth.getInstance().signOut();
+                    Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show();
+                    Intent d=new Intent(MainActivity2.this,Login.class);
+                    startActivity(d);
+
+
             }
             return true;
         });

@@ -21,24 +21,28 @@ public class register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         FirebaseAuth mauth;
         setContentView(R.layout.activity_register);
+
         Button register=findViewById(R.id.register);
 
         EditText username=findViewById(R.id.regusername);
         EditText email=findViewById(R.id.regemail);
         EditText pwd=findViewById(R.id.regpassword);
        // EditText confirmpwd=findViewById(R.id.regconfirmpwd);
-
-        String reguser=username.getText().toString();
-        String regemail=email.getText().toString();
-        String regpwd=pwd.getText().toString();
         mauth= FirebaseAuth.getInstance();
+
+
        // String regconfirmpwd=confirmpwd.getText().toString();
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String reguser=username.getText().toString();
+                String regemail=email.getText().toString();
+                String regpwd=pwd.getText().toString();
+                userdetails user=new userdetails(reguser,regemail,regpwd);
                 mauth.createUserWithEmailAndPassword(regemail,regpwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull  Task<AuthResult> task) {
