@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_account"
+        android:title="Materials" />
+
+    <item
+        android:id="@+id/nav_settings"
+        android:title="Previous Papers" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:title="Imp Questions" />
+    <item
+        android:id="@+id/developer"
+        android:title="About Developer"
+        />
+    <item
+        android:id="@+id/contribute"
+        android:title="contribution"
+        />
+</menu>
