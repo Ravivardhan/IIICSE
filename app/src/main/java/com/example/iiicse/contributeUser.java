@@ -20,11 +20,22 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+
 public class contributeUser extends AppCompatActivity {
+
     Uri imageuri = null;
+    ArrayList<String> list=new ArrayList<>();
+
 
 
 
@@ -33,6 +44,7 @@ public class contributeUser extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contribute_user);
+
 
 
         Spinner dropdown = findViewById(R.id.spinner1);
@@ -56,6 +68,36 @@ public class contributeUser extends AppCompatActivity {
                 // We will be redirected to choose pdf
                 galleryIntent.setType("application/pdf");
                 startActivityForResult(galleryIntent, 1);
+
+
+
+
+                FirebaseAuth mauth;
+                mauth=FirebaseAuth.getInstance();
+
+                DatabaseReference mref= FirebaseDatabase.getInstance().getReference("contribution").child(unit);
+
+                DatabaseReference mref2=FirebaseDatabase.getInstance().getReference("users");
+
+                mref2.child(mauth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull  DataSnapshot snapshot) {
+                        String username=snapshot.child("username").getValue().toString();
+                        list.add(0,username);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull  DatabaseError error) {
+
+                    }
+                });
+
+
+                Pdfinfo info=new Pdfinfo(list.get(0),list.get(1),unit,list.get(2));
+
+                mref2.child(list.get(2)).setValue(info);
+
             }
         });
 
@@ -89,6 +131,7 @@ public class contributeUser extends AppCompatActivity {
             String file=filename.getText().toString();
             // Here we are uploading the pdf in firebase storage with the name of current time
             final StorageReference filepath = storageReference1.child(file + "." + "pdf");
+            list.add(2,file);
             Toast.makeText(contributeUser.this, filepath.getName(), Toast.LENGTH_SHORT).show();
             filepath.putFile(imageuri).continueWithTask(new Continuation() {
                 @Override
@@ -102,12 +145,16 @@ public class contributeUser extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
+
                         // After uploading is done it progress
                         // dialog box will be dismissed
                         dialog.dismiss();
                         Uri uri = task.getResult();
                         String myurl;
                         myurl = uri.toString();
+                        list.add(1,myurl);
+
+
                         Toast.makeText(contributeUser.this, "Uploaded Successfully", Toast.LENGTH_SHORT).show();
                     } else {
                         dialog.dismiss();
