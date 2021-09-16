@@ -33,7 +33,7 @@ public class Login extends AppCompatActivity {
         uname=findViewById(R.id.loginusername);
         pwd=findViewById(R.id.loginpassword);
         mauth=FirebaseAuth.getInstance();
-        TextView signuph=findViewById(R.id.signuph);
+        TextView signuph=findViewById(R.id.signup);
 
 
 

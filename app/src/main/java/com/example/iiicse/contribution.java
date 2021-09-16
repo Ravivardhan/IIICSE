@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 public class contribution extends AppCompatActivity {
@@ -33,6 +34,16 @@ public class contribution extends AppCompatActivity {
         i.putExtra("subject",subshort[position]);
         startActivity(i);
 
+      }
+    });
+
+    Button btn=findViewById(R.id.button);
+    btn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent i=new Intent(contribution.this,contributeUser.class);
+
+        startActivity(i);
       }
     });
 
