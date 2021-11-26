@@ -62,6 +62,7 @@ public class contributeUser extends AppCompatActivity {
 
         ImageButton upload=(ImageButton) findViewById(R.id.upload);
 
+
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +70,7 @@ public class contributeUser extends AppCompatActivity {
                 String filename=file.getText().toString();
                 if (filename.isEmpty()){
 
-                    Toast.makeText(contributeUser.this, "enter filename", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(contributeUser.this, "enter filename and subject", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     String unit = dropdown.getSelectedItem().toString();
@@ -117,7 +118,7 @@ public class contributeUser extends AppCompatActivity {
                                 Log.e("Tuts+", "uri: " + uri.toString());
                                 list.add(uri.toString());
                                 //Toast.makeText(contributeUser.this, String.valueOf(list), Toast.LENGTH_SHORT).show();
-                                //Handle whatever you're going to do with the URL here
+
                                 Pdfinfo info=new Pdfinfo(list.get(2),list.get(3),list.get(0),list.get(1));
                                 DatabaseReference dre = FirebaseDatabase.getInstance().getReference("contribution");
                                 //Toast.makeText(contributeUser.this, list.get(0), Toast.LENGTH_SHORT).show();
@@ -183,7 +184,7 @@ public class contributeUser extends AppCompatActivity {
             StorageReference storageReference = FirebaseStorage.getInstance().getReference("IIICSE");
             final String messagePushID = timestamp;
 
-            Toast.makeText(contributeUser.this, imageuri.toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(contributeUser.this, imageuri.toString(), Toast.LENGTH_SHORT).show();
             Spinner tt=(Spinner)findViewById(R.id.spinner1);
             String unit=tt.getSelectedItem().toString();
             StorageReference storageReference1=storageReference.child(unit);
@@ -191,10 +192,10 @@ public class contributeUser extends AppCompatActivity {
             EditText filename=findViewById(R.id.filename);
             String file=filename.getText().toString();
             list.add(file);
-            Toast.makeText(this, String.valueOf(list), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, String.valueOf(list), Toast.LENGTH_SHORT).show();
             // Here we are uploading the pdf in firebase storage with the name of current time
             final StorageReference filepath = storageReference1.child(file + "." + "pdf");
-           Toast.makeText(contributeUser.this, filepath.getName(), Toast.LENGTH_SHORT).show();
+           //Toast.makeText(contributeUser.this, filepath.getName(), Toast.LENGTH_SHORT).show();
             filepath.putFile(imageuri).continueWithTask(new Continuation() {
                 @Override
                 public Object then(@NonNull Task task) throws Exception {

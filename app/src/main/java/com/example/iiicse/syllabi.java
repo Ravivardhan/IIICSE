@@ -1,76 +1,35 @@
 package com.example.iiicse;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.Map;
+
 public class syllabi extends AppCompatActivity {
-    ListView ulist;
-    TextView unit;
-
-    //Syllabus unit wise
-    String CN[][]=new String[][]
-            {
-                    {"Introduction","Applications of CN","Network H/W","Network S/W","Reference Models-OSI/ISO-TCP/IP","Guided Transmission media","physical layer","unguided T.M","PSTN","Multiplexing","Types switching Networks","Trunks","Network security","Mobile adopt Network","Wireless Sensor Network"},
-                    {"Data Link Layer","DDL design issues","elementory data link protocol","sliding window Protocol","functionalities","Medium Access Control Sublayer[MAC]","types of protocols","ethernet types","wireless LANs","Protocol Stack","functionality of physical layer","frame structure of LANs"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-            };
-    String LS[][]=new String[][]
-            {
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-            };
-    String DWDM[][]=new String[][]
-            {
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-            };
-    String PPL[][]=new String[][]
-            {
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-            };
-
-
-    String USP[][]=new String[][]
-            {
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-            };
-    String OOAD[][]=new String[][]
-            {
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-                    {"Official syllabus not yet released"},
-            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_syllabi);
 
-        ulist=findViewById(R.id.unitlist);
         //unit=findViewById(R.id.unit);
 
 
@@ -82,51 +41,115 @@ public class syllabi extends AppCompatActivity {
         //unit.setText(String.valueOf(b.get("unit")));
         String subject=String.valueOf(b.get("subject"));
         String un=String.valueOf(b.get("unit"));
-        int uno=0;
-        System.out.println(subject);
 
-        if(un.equals("Unit-I")){
-            uno=0;
-        }
-        if(un.equals("Unit-II")){
-            uno=1;
-        }
-        if(un.equals("Unit-III"))
-        {
-            uno=2;
-        }
-        if(un.equals("Unit-IV"))
-        {
-            uno=3;
-        }
-        if(un.equals("Unit-V"))
-        {
-            uno=4;
-        }
-        System.out.println(uno);
-        String dummy[]=new String[]{};
 
-        if(subject.equals("CN")) {
-            dummy=CN[uno];
-        }
-        if(subject.equals("LS")) {
-            dummy=LS[uno];
-        }
-        if(subject.equals("PPL")) {
-           dummy=PPL[uno];
-        }
-        if(subject.equals("DWDM")) {
-           dummy=DWDM[uno];
-        }
-        if(subject.equals("USP")){
-            dummy=USP[uno];
-        }
-        if(subject.equals("OOAD")) {
-            dummy=OOAD[uno];
-        }
-        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dummy);
 
-        ulist.setAdapter(adapter3);
+        DatabaseReference dref;
+        ListView listview;
+        ArrayList<String> list=new ArrayList<>();
+        ArrayList<String> links=new ArrayList<>();
+        ArrayList<String> by=new ArrayList<>();
 
-    }
-}
+
+            listview = (ListView) findViewById(R.id.unitlist);
+
+
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
+
+            dref = FirebaseDatabase.getInstance().getReference("Materials").child(subject);
+
+
+            dref.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                    //Toast.makeText(contribution_files.this, String.valueOf(map), Toast.LENGTH_SHORT).show();
+                    //String value = dataSnapshot.getValue(String.class);
+                    //list.add(String.valueOf(map));
+
+                    System.out.println(map.toString());
+                    System.out.println(map.get("filename").toString());
+                    System.out.println(map.get("link").toString());
+                    System.out.println(map.get("unit").toString());
+                    String uts=map.get("unit").toString();
+                    if(uts.equals(un)) {
+
+
+                        //System.out.println(map.get("unit").toString());
+                        list.add(String.valueOf(map.get("filename")));
+
+                        System.out.println(list);
+                        links.add(String.valueOf(map.get("link")));
+                    }
+                    listview.setAdapter(adapter);
+
+
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Intent i=new Intent(syllabi.this,mat.class);
+                //i.putExtra("link", links.get(position));
+                //startActivity(i);
+                CharSequence options[] = new CharSequence[]{
+                        "Download",
+                        "View",
+                        "Cancel"
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Choose One");
+
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // we will be downloading the pdf
+                        if (which == 0) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(links.get(position)));
+                            startActivity(intent);
+                            Toast.makeText(syllabi.this, "download", Toast.LENGTH_SHORT).show();
+                        }
+                        // We will view the pdf
+                        if (which == 1) {
+                            Intent intent = new Intent(view.getContext(), ViewPdfActivity.class);
+                            intent.putExtra("url", links.get(position));
+                            startActivity(intent);                        }
+                    }
+                });
+                builder.show();
+            }
+        });
+
+
+
+
+
+        }}
+
+
+
+
+
+

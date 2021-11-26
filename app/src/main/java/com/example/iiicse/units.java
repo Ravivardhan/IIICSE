@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class units extends AppCompatActivity {
     ListView units;
     String u[]=new String[]{"Unit-I","Unit-II","Unit-III","Unit-IV","Unit-V"};
+    String unit[]=new String[]{"U1","U2","U3","U4","U5"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class units extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i=new Intent(units.this,syllabi.class);
                 i.putExtra("subject",String.valueOf(b.get("subject")));
-                i.putExtra("unit",u[position]);
+                i.putExtra("unit",unit[position]);
                 startActivity(i);
             }
         });

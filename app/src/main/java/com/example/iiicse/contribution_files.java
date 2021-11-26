@@ -28,6 +28,8 @@ public class contribution_files extends AppCompatActivity {
     ListView listview;
     ArrayList<String> list=new ArrayList<>();
     ArrayList<String> links=new ArrayList<>();
+    ArrayList<String> by=new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,14 +50,15 @@ public class contribution_files extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                Toast.makeText(contribution_files.this, String.valueOf(map), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(contribution_files.this, String.valueOf(map), Toast.LENGTH_SHORT).show();
                 //String value = dataSnapshot.getValue(String.class);
                 //list.add(String.valueOf(map));
                 System.out.println(map.toString());
                 System.out.println(map.get("filename").toString());
                 System.out.println(map.get("by").toString());
+                by.add(String.valueOf(map.get("by")));
                 System.out.println(map.get("link").toString());
-                System.out.println(map.get("unit").toString());
+                //System.out.println(map.get("unit").toString());
                 list.add(String.valueOf(map.get("filename")));
 
                 System.out.println(list);
@@ -93,6 +96,7 @@ public class contribution_files extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i=new Intent(contribution_files.this,pdf.class);
+                i.putExtra("by",by.get(position));
                 i.putExtra("link", links.get(position));
                 startActivity(i);
             }

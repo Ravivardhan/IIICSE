@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/nav_logout"
-        android:title="Live Notes" />
+        android:title="ChatRoom" />
 
     <item
         android:id="@+id/contribute"
