@@ -2,6 +2,7 @@ package com.example.iiicse;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -49,6 +50,18 @@ public class contributeUser extends AppCompatActivity {
         setContentView(R.layout.activity_contribute_user);
 
 
+        AlertDialog.Builder builder=new AlertDialog.Builder(contributeUser.this);
+
+        builder.setMessage("step1:enter name of the file\n" +
+                "step2:select the subject\n" +
+                "step3:upload your file \n" +
+                "step4:click on submit\n\n");
+
+        builder.setTitle("steps");
+        builder.setCancelable(true);
+        AlertDialog alertDialog=builder.create();
+        alertDialog.show();
+
         Spinner dropdown = findViewById(R.id.spinner1);
         String[] items = new String[]{"LS", "PPL", "USP","CN","OOAD","MPMC"};
 
@@ -73,6 +86,12 @@ public class contributeUser extends AppCompatActivity {
                     Toast.makeText(contributeUser.this, "enter filename and subject", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    file.setFocusable(false);
+                    file.setClickable(false);
+                    Spinner tt=(Spinner)findViewById(R.id.spinner1);
+                    //tt.setEnabled(false);
+                    tt.setClickable(false);
+
                     String unit = dropdown.getSelectedItem().toString();
                     list.add(unit);
                     Intent galleryIntent = new Intent();
@@ -124,10 +143,9 @@ public class contributeUser extends AppCompatActivity {
                                 //Toast.makeText(contributeUser.this, list.get(0), Toast.LENGTH_SHORT).show();
                                 dre.child(String.valueOf(list.get(0))).child(String.valueOf(list.get(1))).setValue(info);
 
+                                //Toast.makeText(contributeUser.this, "thanks for the contribution", Toast.LENGTH_SHORT).show();
 
-                                Intent i=new Intent(contributeUser.this,contribution.class);
-                                Toast.makeText(contributeUser.this, "thanks for the contribution", Toast.LENGTH_SHORT).show();
-                                startActivity(i);
+
 
 
 
@@ -162,9 +180,22 @@ public class contributeUser extends AppCompatActivity {
 
                     }
                 });
+                Intent i=new Intent(contributeUser.this,contribution.class);
+                Toast.makeText(contributeUser.this, "thanks for the contribution", Toast.LENGTH_SHORT).show();
+
+                startActivity(i);
 
 
     }});}
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i=new Intent(contributeUser.this,contribution.class);
+        startActivity(i);
+    }
+
     ProgressDialog dialog;
 
     @Override

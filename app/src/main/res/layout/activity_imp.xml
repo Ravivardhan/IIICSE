@@ -4,10 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+
     tools:context=".contribution_files">
 
 
     <ListView
+        android:transcriptMode="alwaysScroll"
+        android:stackFromBottom="true"
         android:id="@+id/liveview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

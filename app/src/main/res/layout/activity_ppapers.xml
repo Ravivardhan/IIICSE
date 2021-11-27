@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".previous">
+    tools:context=".ppapers">
+
 
     <ListView
-        android:id="@+id/pplist"
+        android:id="@+id/subs"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

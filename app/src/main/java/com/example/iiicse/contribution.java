@@ -48,4 +48,11 @@ public class contribution extends AppCompatActivity {
     });
 
   }
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+
+    Intent i=new Intent(contribution.this,MainActivity2.class);
+    startActivity(i);
+  }
 }

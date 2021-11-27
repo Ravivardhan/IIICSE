@@ -48,6 +48,12 @@ public class imp extends AppCompatActivity {
 
 
         ListView listview = (ListView) findViewById(R.id.liveview);
+        listview.setStackFromBottom(true);
+        listview.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+
+
+
+
 
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
