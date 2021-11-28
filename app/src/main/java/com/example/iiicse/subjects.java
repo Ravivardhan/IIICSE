@@ -12,8 +12,8 @@ import android.widget.Toast;
 
 public class subjects extends AppCompatActivity {
     ListView sub;
-    String subjects[]=new String[]{"Life Science","Principles of Programming Languages","Computer Networks","Unix and Shell Programming","Object Oriented Analysis and Design","Data Warehousing and Data Mining","Micro Processors and Micro Controllers"};
-    String subshort[]=new String[]{"LS","PPL","CN","USP","OOAD","DWDM","MPMC"};
+    String subjects[]=new String[]{"Life Science","Principles of Programming Languages","Computer Networks","Unix and Shell Programming","Object Oriented Analysis and Design","Micro Processors and Micro Controllers"};
+    String subshort[]=new String[]{"LS","PPL","CN","USP","OOAD","MPMC"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -22,7 +22,7 @@
         />
     <item
         android:id="@+id/developer"
-        android:title="About Developer"
+        android:title="Developer"
         />
     <item
         android:id="@+id/logout"

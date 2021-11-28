@@ -62,7 +62,7 @@ public class contribution_files extends AppCompatActivity {
                 by.add(String.valueOf(map.get("by")));
                 System.out.println(map.get("link").toString());
                 //System.out.println(map.get("unit").toString());
-                list.add(String.valueOf(map.get("filename")));
+                list.add(String.valueOf(map.get("filename"))+"  ( by "+String.valueOf(map.get("by"))+" )");
 
                 System.out.println(list);
                 links.add(String.valueOf(map.get("link")));
