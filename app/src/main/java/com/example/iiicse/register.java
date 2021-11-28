@@ -3,6 +3,7 @@ package com.example.iiicse;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,9 @@ public class register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ProgressDialog dialog;
+        dialog= new ProgressDialog(register.this);
+        dialog.setMessage("Registering");
 
 
 
@@ -43,32 +47,44 @@ public class register extends AppCompatActivity {
         ref= FirebaseDatabase.getInstance().getReference("users");
 
 
+
        // String regconfirmpwd=confirmpwd.getText().toString();
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.show();
                 String reguser=username.getText().toString();
                 String regemail=email.getText().toString();
                 String regpwd=pwd.getText().toString();
+
                 userdetails user=new userdetails(reguser,regemail,regpwd);
-                mauth.createUserWithEmailAndPassword(regemail,regpwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull  Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                if(regpwd.length()>6)
+                {
+                    mauth.createUserWithEmailAndPassword(regemail,regpwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull  Task<AuthResult> task) {
+                            if(task.isSuccessful()){
 
-                            ref.child(String.valueOf(mauth.getCurrentUser().getUid())).setValue(user);
+                                ref.child(String.valueOf(mauth.getCurrentUser().getUid())).setValue(user);
+                                dialog.dismiss();
 
-                            Toast.makeText(register.this, "Signup successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(register.this, "Signup successful", Toast.LENGTH_SHORT).show();
 
-                            Intent i=new Intent(register.this,MainActivity2.class);
-                            startActivity(i);
+                                Intent i=new Intent(register.this,MainActivity2.class);
+                                startActivity(i);
+                            }
+                            else{
+                                dialog.dismiss();
+                                Toast.makeText(register.this, "Signup failed...", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else{
-                            Toast.makeText(register.this, "Signup failed...", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    });
+                }
+                else {
+                    dialog.dismiss();
+                    Toast.makeText(register.this, "password must contain atleast 6 characters", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
