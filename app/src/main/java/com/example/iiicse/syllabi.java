@@ -35,8 +35,8 @@ public class syllabi extends AppCompatActivity {
 
         Intent i=getIntent();
         Bundle b=i.getExtras();
-        Toast.makeText(syllabi.this, String.valueOf(b.get("subject")), Toast.LENGTH_SHORT).show();
-        Toast.makeText(syllabi.this,String.valueOf(b.get("unit")),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(syllabi.this, String.valueOf(b.get("subject")), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(syllabi.this,String.valueOf(b.get("unit")),Toast.LENGTH_SHORT).show();
 
         //unit.setText(String.valueOf(b.get("unit")));
         String subject=String.valueOf(b.get("subject"));

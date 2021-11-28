@@ -252,7 +252,7 @@ public class contributeUser extends AppCompatActivity {
                         myurl = uri.toString();
                         list.add(myurl);
                         System.out.println(myurl);
-                        Toast.makeText(contributeUser.this, String.valueOf(list), Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(contributeUser.this, String.valueOf(list), Toast.LENGTH_SHORT).show();
 
                         Toast.makeText(contributeUser.this, "Uploaded Successfully", Toast.LENGTH_SHORT).show();
 

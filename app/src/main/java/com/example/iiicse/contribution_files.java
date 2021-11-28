@@ -2,9 +2,12 @@ package com.example.iiicse;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -92,15 +95,55 @@ public class contribution_files extends AppCompatActivity {
         //listview on click listener....
 
 
+        //listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+          //  @Override
+            //public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+              //  i.putExtra("by",by.get(position));
+                //i.putExtra("link", links.get(position));
+            //}
+        //});
+
+        //new on click listener
+
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i=new Intent(contribution_files.this,pdf.class);
-                i.putExtra("by",by.get(position));
-                i.putExtra("link", links.get(position));
-                startActivity(i);
+                //Intent i=new Intent(syllabi.this,mat.class);
+                //i.putExtra("link", links.get(position));
+                //startActivity(i);
+                CharSequence options[] = new CharSequence[]{
+                        "Download",
+                        "View",
+                        "Cancel"
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Choose One");
+
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // we will be downloading the pdf
+                        if (which == 0) {
+
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(links.get(position)));
+                            startActivity(intent);
+                            Toast.makeText(contribution_files.this, "download", Toast.LENGTH_SHORT).show();
+                        }
+                        // We will view the pdf
+                        if (which == 1) {
+                            Intent intent = new Intent(view.getContext(), ViewPdfActivity.class);
+                            intent.putExtra("url", links.get(position));
+                            startActivity(intent);                        }
+                    }
+                });
+                builder.show();
+
+                Toast.makeText(contribution_files.this, "uploaded by "+by.get(position), Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
 

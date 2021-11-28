@@ -69,6 +69,11 @@ public class MainActivity2 extends AppCompatActivity {
                     startActivity(n);
                     break;
 
+                case R.id.syllabus:
+                    Intent sl=new Intent(MainActivity2.this,syllabus.class);
+                    startActivity(sl);
+                    break;
+
                 case R.id.logout:
                     FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
                     FirebaseAuth.getInstance().signOut();

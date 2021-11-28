@@ -61,25 +61,31 @@ public class register extends AppCompatActivity {
                 userdetails user=new userdetails(reguser,regemail,regpwd);
                 if(regpwd.length()>6)
                 {
-                    mauth.createUserWithEmailAndPassword(regemail,regpwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull  Task<AuthResult> task) {
-                            if(task.isSuccessful()){
+                    if(!reguser.isEmpty()) {
+                        mauth.createUserWithEmailAndPassword(regemail, regpwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
 
-                                ref.child(String.valueOf(mauth.getCurrentUser().getUid())).setValue(user);
-                                dialog.dismiss();
+                                    ref.child(String.valueOf(mauth.getCurrentUser().getUid())).setValue(user);
+                                    dialog.dismiss();
 
-                                Toast.makeText(register.this, "Signup successful", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(register.this, "Signup successful", Toast.LENGTH_SHORT).show();
 
-                                Intent i=new Intent(register.this,MainActivity2.class);
-                                startActivity(i);
+                                    Intent i = new Intent(register.this, MainActivity2.class);
+                                    startActivity(i);
+                                } else {
+                                    dialog.dismiss();
+                                    Toast.makeText(register.this, "Signup failed...", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                            else{
-                                dialog.dismiss();
-                                Toast.makeText(register.this, "Signup failed...", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+
+                        });
+                    }
+                    else {
+                        dialog.dismiss();
+                        Toast.makeText(register.this, "username can't be null", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else {
                     dialog.dismiss();

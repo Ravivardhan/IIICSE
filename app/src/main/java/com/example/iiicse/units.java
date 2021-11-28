@@ -28,7 +28,7 @@ public class units extends AppCompatActivity {
         Intent i=getIntent();
         Bundle b=i.getExtras();
 
-        Toast.makeText(units.this,String.valueOf( b.get("subject")), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(units.this,String.valueOf( b.get("subject")), Toast.LENGTH_SHORT).show();
 
         units.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

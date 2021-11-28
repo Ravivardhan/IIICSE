@@ -19,7 +19,7 @@ public class pdf extends AppCompatActivity {
         Bundle b=i.getExtras();
         String pdf_url=String.valueOf(b.get("link"));
         String by=String.valueOf(b.get("by"));
-        Toast.makeText(this, "by "+by, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "uploaded by "+by, Toast.LENGTH_SHORT).show();
 
         WebView webView=(WebView)findViewById(R.id.webview);
 

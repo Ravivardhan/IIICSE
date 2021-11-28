@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +31,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 public class imp extends AppCompatActivity {
+
     ArrayList<String> list=new ArrayList<>();
     ArrayList<String> user=new ArrayList<>();
     ArrayList<String> msguser=new ArrayList<>();
@@ -38,6 +40,11 @@ public class imp extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ProgressDialog dialog=new ProgressDialog(imp.this);
+        dialog.setMessage("Loading...");
+
+
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imp);
@@ -59,6 +66,10 @@ public class imp extends AppCompatActivity {
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
 
         DatabaseReference dref = FirebaseDatabase.getInstance().getReference("chatroom");
+
+
+        dialog.show();
+
 
 
         dref.addChildEventListener(new ChildEventListener() {
@@ -103,6 +114,7 @@ public class imp extends AppCompatActivity {
 
             }
         });
+        dialog.dismiss();
 
 
         //message sending code here.....

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IIICSE">
-        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".syllabuscopy"></activity>
+        <activity android:name=".syllabus" />
+        <activity android:name=".ForgotPassword" />
         <activity android:name=".papers" />
         <activity android:name=".ppapers" />
         <activity android:name=".ViewPdfActivity" />
